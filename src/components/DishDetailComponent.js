@@ -14,6 +14,7 @@ function RenderDish({ dish }) {
 }
 
 function RenderComments({ comments }) {
+  console.log(comments);
   if (comments.length === 0) {
     return <div></div>;
   } else {
@@ -44,13 +45,14 @@ const DishDetail = (props) => {
   if (props.dish === null) {
     return <div></div>;
   } else {
+    console.log(props.dish);
     return (
       <div className="row">
         <div className="col-12 col-md-5 m-1">
           <RenderDish dish={props.dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <RenderComments comments={props.comments} />
+          <RenderComments comments={props.dish.comments} />
         </div>
       </div>
     );
