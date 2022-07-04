@@ -16,7 +16,7 @@ function RenderLeader(props) {
         <Media
           object
           src={props.leader.image}
-          alt={"${props.leader.name} image"}
+          alt={`${props.leader.name} image`}
           className="mr-5 align-self-center"
         />
       </Media>
