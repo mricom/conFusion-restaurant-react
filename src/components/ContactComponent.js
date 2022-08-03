@@ -119,7 +119,7 @@ class Contact extends Component {
                     messages={{
                       required: "Required.\n",
                       minLength: "Must be greater than 2 characters.\n",
-                      maxLength: "Must be 15 characters of less.\n",
+                      maxLength: "Must be 15 characters or less.\n",
                     }}
                   />
                 </Col>
@@ -148,7 +148,7 @@ class Contact extends Component {
                     messages={{
                       required: "Required.\n",
                       minLength: "Must be greater than 2 characters.\n",
-                      maxLength: "Must be 15 characters of less.\n",
+                      maxLength: "Must be 15 characters or less.\n",
                     }}
                   />
                 </Col>
@@ -178,7 +178,7 @@ class Contact extends Component {
                     messages={{
                       required: "Required.\n",
                       minLength: "Must be greater than 2 numbers.\n",
-                      maxLength: "Must be 15 numbers of less.\n",
+                      maxLength: "Must be 15 numbers or less.\n",
                       isNumber: "Must be a number.\n"
                     }}
                   />
