@@ -12,7 +12,9 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  Label,
 } from "reactstrap";
+import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 
 function RenderDish({ dish }) {
@@ -83,7 +85,50 @@ class CommentForm extends Component {
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
-          <ModalBody></ModalBody>
+          <ModalBody>
+            <LocalForm>
+              <div className="form-group">
+                <Label for="rating">Rating</Label>
+                <Control.select
+                  model=".rating"
+                  name="rating"
+                  className="form-control"
+                >
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Control.select>
+              </div>
+              <div className="form-group">
+                <Label for="author">Your Name</Label>
+                <Control.text
+                  model=".author"
+                  className="form-control"
+                  id="author"
+                  name="author"
+                  placeholder="Your Name"
+                />
+              </div>
+              <div className="form-group">
+                <Label for="comment">Comment</Label>
+                <Control.textarea
+                  model=".comment"
+                  className="form-control"
+                  id="comment"
+                  name="comment"
+                  placeholder="Your Name"
+                  rows="6"
+                />
+              </div>
+              <div className="form-group">
+                <Button type="submit" color="primary">
+                  Submit
+                </Button>
+              </div>
+            </LocalForm>
+          </ModalBody>
         </Modal>
       </>
     );
