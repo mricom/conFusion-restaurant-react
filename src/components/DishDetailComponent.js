@@ -17,6 +17,9 @@ import {
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
+
 function RenderDish({ dish }) {
   return (
     <Card>
@@ -64,12 +67,19 @@ class CommentForm extends Component {
       isModalOpen: false,
     };
     this.toggleModal = this.toggleModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
     });
+  }
+
+  handleSubmit(values) {
+    console.log(`Current State is: ${JSON.stringify(values)}`);
+    alert(`Current State is: ${JSON.stringify(values)}`);
+    this.toggleModal();
   }
 
   render() {
@@ -86,7 +96,7 @@ class CommentForm extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
-            <LocalForm>
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
               <div className="form-group">
                 <Label for="rating">Rating</Label>
                 <Control.select
@@ -109,6 +119,19 @@ class CommentForm extends Component {
                   id="author"
                   name="author"
                   placeholder="Your Name"
+                  validators={{
+                    minLength: minLength(3),
+                    maxLength: maxLength(15),
+                  }}
+                />
+                <Errors
+                  className="text-danger"
+                  model=".author"
+                  show="touched"
+                  messages={{
+                    minLength: "Must be greater than 2 characters.\n",
+                    maxLength: "Must be 15 characters of less.\n",
+                  }}
                 />
               </div>
               <div className="form-group">
