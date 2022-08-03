@@ -1,6 +1,19 @@
-import React from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle, List, BreadcrumbItem, Breadcrumb } from "reactstrap";
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  List,
+  BreadcrumbItem,
+  Breadcrumb,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
 function RenderDish({ dish }) {
   return (
@@ -36,6 +49,42 @@ function RenderComments({ comments }) {
             </li>
           ))}
         </List>
+        <CommentForm></CommentForm>
+      </>
+    );
+  }
+}
+
+class CommentForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+    };
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+    });
+  }
+
+  render() {
+    return (
+      <>
+        <Button
+          type="button"
+          outline
+          onClick={this.toggleModal}
+          id="comment-form-open-button"
+        >
+          <span className="fa fa-pencil mr-2"></span>Submit Comment
+        </Button>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+          <ModalBody></ModalBody>
+        </Modal>
       </>
     );
   }
@@ -46,26 +95,28 @@ const DishDetail = (props) => {
     return <div></div>;
   } else {
     return (
-        <div className="container">
+      <div className="container">
         <div className="row">
-            <Breadcrumb>
-                <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-            </Breadcrumb>
-            <div className="col-12">
-                <h3>{props.dish.name}</h3>
-                <hr />
-            </div>                
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <Link to="/menu">Menu</Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+          </Breadcrumb>
+          <div className="col-12">
+            <h3>{props.dish.name}</h3>
+            <hr />
+          </div>
         </div>
         <div className="row">
-            <div className="col-12 col-md-5 m-1">
-                <RenderDish dish={props.dish} />
-            </div>
-            <div className="col-12 col-md-5 m-1">
-                <RenderComments comments={props.comments} />
-            </div>
+          <div className="col-12 col-md-5 m-1">
+            <RenderDish dish={props.dish} />
+          </div>
+          <div className="col-12 col-md-5 m-1">
+            <RenderComments comments={props.comments} />
+          </div>
         </div>
-        </div>
+      </div>
     );
   }
 };
