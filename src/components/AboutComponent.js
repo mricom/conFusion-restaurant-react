@@ -8,6 +8,8 @@ import {
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
 
 function RenderLeader(props) {
   return (
@@ -15,7 +17,7 @@ function RenderLeader(props) {
       <Media left>
         <Media
           object
-          src={props.leader.image}
+          src={baseUrl + props.leader.image}
           alt={`${props.leader.name} image`}
           className="mr-5 align-self-center"
         />
@@ -30,7 +32,7 @@ function RenderLeader(props) {
 }
 
 function About(props) {
-  const leaders = props.leaders.map((leader) => {
+  const leaders = props.leaders.leaders.map((leader) => {
     return <RenderLeader key={leader.id} leader={leader} />;
   });
 
@@ -110,7 +112,13 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <Media list>{leaders}</Media>
+          {props.leaders.isLoading ? (
+            <Loading />
+          ) : props.leaders.errMess ? (
+            <h4>{props.leaders.errMess}</h4>
+          ) : (
+            <Media list>{leaders}</Media>
+          )}
         </div>
       </div>
     </div>
