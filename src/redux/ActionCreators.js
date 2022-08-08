@@ -46,6 +46,7 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
       alert("Your comment could not be posted\nError: " + error.message);
     });
 };
+
 export const fetchDishes = () => (dispatch) => {
   dispatch(dishesLoading(true));
 
@@ -160,7 +161,6 @@ export const addPromos = (promos) => ({
   payload: promos,
 });
 
-
 export const fetchLeaders = () => (dispatch) => {
   dispatch(leadersLoading());
 
@@ -200,3 +200,54 @@ export const addLeaders = (leaders) => ({
   type: ActionTypes.ADD_LEADERS,
   payload: leaders,
 });
+
+export const postFeedback = (
+  firstname,
+  lastName,
+  telnum,
+  email,
+  agree,
+  contactType,
+  message
+) => (dispatch) => {
+  const newFeedback = {
+    firstname,
+    lastName,
+    telnum,
+    email,
+    agree,
+    contactType,
+    message,
+  };
+
+  return fetch(baseUrl + "feedback", {
+    method: "POST",
+    body: JSON.stringify(newFeedback),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error(
+            "Error " + response.status + ": " + response.statusText
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => alert(`Thank you for your feedback! ${JSON.stringify(response)}`))
+    .catch((error) => {
+      console.log("post feedback", error.message);
+      alert("Your feedback could not be sent\nError: " + error.message);
+    });
+};
